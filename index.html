@@ -32,6 +32,8 @@
       padding: 2.5rem 2rem;
       box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
       border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
     }
 
     .logo {
@@ -41,6 +43,7 @@
       font-size: 0.8rem;
       color: #00a8e8;
       margin-bottom: 0.75rem;
+      cursor: pointer; /* hint it’s interactive (only you know why) */
     }
 
     h1 {
@@ -130,6 +133,59 @@
       color: #7f8aa0;
     }
 
+    /* Easter egg styles */
+    .easter-egg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(0, 168, 232, 0.06), transparent 55%),
+                  rgba(3, 8, 18, 0.96);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 2rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .easter-egg.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .easter-egg h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+      color: #00a8e8;
+    }
+
+    .easter-egg p {
+      font-size: 0.95rem;
+      color: #d6e2f5;
+      max-width: 420px;
+      margin-bottom: 1.4rem;
+      line-height: 1.5;
+    }
+
+    .easter-egg button {
+      margin-top: 0.5rem;
+      padding: 0.45rem 1.2rem;
+      border-radius: 999px;
+      border: none;
+      background: rgba(0, 168, 232, 0.12);
+      color: #9bdcff;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .easter-egg small {
+      font-size: 0.75rem;
+      color: #7f8aa0;
+      margin-top: 0.6rem;
+    }
+
     @media (max-width: 480px) {
       .card {
         padding: 2rem 1.4rem;
@@ -142,7 +198,7 @@
 </head>
 <body>
   <main class="card" aria-label="Coming soon page">
-    <div class="logo">Dell Solutions Architect</div>
+    <div class="logo" id="sa-logo">Dell Solutions Architect</div>
     <div class="pill">Blog Launching Soon</div>
     <h1>Coming Soon: Life in the Solutions Architect Seat</h1>
     <p class="tagline">
@@ -168,6 +224,61 @@
     <p class="footnote">
       No spam. Just occasional updates on new posts, architectures, and Dell-focused how-tos.
     </p>
+
+     <!-- Hidden easter egg overlay -->
+    <section class="easter-egg" id="easter-egg" aria-hidden="true">
+      <h2>Unofficial Architect Mode: Enabled</h2>
+      <p>
+        luke is a pigeon, connor is pretty, reda is all-knowing
+      </p>
+      <button type="button" id="close-egg">Back to normal view</button>
+      <small>Secret tap pattern detected. This one’s just for you.</small>
+    </section>
   </main>
+
+  <!-- Easter egg script: secret tap pattern on logo -->
+  <script>
+    (function () {
+      const logo = document.getElementById("sa-logo");
+      const overlay = document.getElementById("easter-egg");
+      const closeBtn = document.getElementById("close-egg");
+
+      const REQUIRED_TAPS = 7;         // change this if you want a different count
+      const TIME_WINDOW_MS = 3000;     // taps must occur within 3 seconds
+
+      let tapCount = 0;
+      let firstTapTime = 0;
+
+      function registerTap() {
+        const now = Date.now();
+
+        if (!firstTapTime || now - firstTapTime > TIME_WINDOW_MS) {
+          // start a new sequence
+          firstTapTime = now;
+          tapCount = 1;
+        } else {
+          tapCount++;
+        }
+
+        if (tapCount >= REQUIRED_TAPS) {
+          overlay.classList.add("visible");
+          overlay.setAttribute("aria-hidden", "false");
+          tapCount = 0;
+          firstTapTime = 0;
+        }
+      }
+
+      logo.addEventListener("click", registerTap);
+      logo.addEventListener("touchend", function (e) {
+        e.preventDefault();
+        registerTap();
+      });
+
+      closeBtn.addEventListener("click", function () {
+        overlay.classList.remove("visible");
+        overlay.setAttribute("aria-hidden", "true");
+      });
+    })();
+  </script>
 </body>
 </html>
