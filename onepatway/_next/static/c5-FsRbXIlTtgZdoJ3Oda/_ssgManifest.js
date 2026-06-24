@@ -1,1 +1,0 @@
-self.__SSG_MANIFEST=new Set(["\u002Faccounts\u002F[accountId]","\u002Fdeals\u002F[dealId]"]);self.__SSG_MANIFEST_CB&&self.__SSG_MANIFEST_CB()
