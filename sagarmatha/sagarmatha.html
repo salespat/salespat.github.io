@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sagarmatha Leadership Lab — Where technical mastery becomes leadership</title>
+<meta name="description" content="A twelve-week leadership program for PhD engineers of the Nepalese diaspora. Eight seats per cohort. Built by one of your own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --night: #0B1120;
+    --night-2: #111A2E;
+    --snow: #F8F9FB;
+    --paper: #FFFFFF;
+    --ink: #131A26;
+    --slate: #4A5568;
+    --crimson: #C8102E;
+    --crimson-soft: rgba(200,16,46,0.08);
+    --contour: #DDE3EC;
+    --contour-dark: rgba(221,227,236,0.14);
+    --muted: #6B7484;
+    --muted-dark: #8B94A8;
+    --max: 1140px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--snow);
+    color: var(--ink);
+    line-height: 1.65;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 28px; }
+  h1, h2, h3 { font-family: 'Bricolage Grotesque', sans-serif; line-height: 1.04; letter-spacing: -0.02em; }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--crimson);
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 1.5px; background: var(--crimson); }
+  .eyebrow .alt { color: var(--muted); margin-left: auto; letter-spacing: 0.1em; }
+
+  /* ---------- Nav ---------- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    border-bottom: 1px solid transparent;
+  }
+  nav.dark-mode { background: rgba(11,17,32,0.6); backdrop-filter: blur(14px); }
+  nav.light-mode { background: rgba(248,249,251,0.85); backdrop-filter: blur(14px); border-bottom-color: var(--contour); }
+  .nav-inner {
+    max-width: var(--max); margin: 0 auto; padding: 18px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800; font-size: 19px; text-decoration: none;
+    color: #fff; transition: color 0.3s ease;
+  }
+  nav.light-mode .logo { color: var(--ink); }
+  .logo span { color: var(--crimson); }
+  .nav-links { display: flex; gap: 30px; align-items: center; }
+  .nav-links > a:not(.btn) {
+    text-decoration: none; font-size: 15px; font-weight: 500;
+    color: var(--muted-dark); transition: color 0.2s ease;
+  }
+  nav.light-mode .nav-links > a:not(.btn) { color: var(--slate); }
+  .nav-links > a:not(.btn):hover { color: var(--crimson); }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--crimson); color: #fff;
+    font-weight: 600; font-size: 15px;
+    padding: 13px 28px; border-radius: 100px;
+    text-decoration: none; white-space: nowrap;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(200,16,46,0.35); background: #B00E29; }
+  .btn .arrow { transition: transform 0.15s ease; }
+  .btn:hover .arrow { transform: translateX(3px); }
+  .btn:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid var(--crimson); outline-offset: 3px; border-radius: 6px; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: #fff; font-weight: 600; font-size: 15px; text-decoration: none;
+    padding: 13px 4px; border-bottom: 2px solid var(--crimson);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: radial-gradient(ellipse 120% 90% at 70% -10%, var(--night-2) 0%, var(--night) 55%);
+    color: #fff;
+    display: flex; flex-direction: column; justify-content: center;
+    overflow: hidden;
+    padding: 140px 0 80px;
+  }
+  .hero-svg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+  .hero-svg .c { fill: none; stroke: var(--contour-dark); stroke-width: 1.4; }
+  .hero-svg .ridge { fill: none; stroke: var(--crimson); stroke-width: 2.2; filter: drop-shadow(0 0 8px rgba(200,16,46,0.5)); }
+  .elev-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; fill: var(--muted-dark); letter-spacing: 0.08em; }
+  .elev-label.peak { fill: #FF5C71; font-weight: 500; }
+
+  .hero-content { position: relative; z-index: 1; max-width: 760px; }
+  .hero .kicker {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted-dark); margin-bottom: 26px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero .kicker::before { content: ""; width: 34px; height: 1.5px; background: var(--crimson); }
+  .hero h1 {
+    font-size: clamp(46px, 7.2vw, 92px);
+    font-weight: 800;
+    margin-bottom: 28px;
+    color: #fff;
+  }
+  .hero h1 em { font-style: normal; color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,0.65); }
+  .hero p.lede {
+    font-size: clamp(18px, 2.1vw, 22px);
+    color: var(--muted-dark);
+    max-width: 580px;
+    margin-bottom: 42px;
+  }
+  .hero p.lede strong { color: #fff; font-weight: 500; }
+  .hero-ctas { display: flex; gap: 26px; flex-wrap: wrap; align-items: center; }
+  .hero-meta {
+    margin-top: 64px;
+    display: flex; gap: 40px; flex-wrap: wrap;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px; letter-spacing: 0.08em;
+    color: var(--muted-dark);
+  }
+  .hero-meta div strong { display: block; color: #fff; font-size: 15px; margin-bottom: 2px; letter-spacing: 0.04em; }
+
+  /* ---------- Marquee ---------- */
+  .marquee {
+    background: var(--night);
+    border-top: 1px solid var(--contour-dark);
+    padding: 20px 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .marquee-track {
+    display: flex; gap: 56px; width: max-content;
+    animation: slide 36s linear infinite;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12.5px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted-dark); white-space: nowrap;
+  }
+  .marquee-track span::after { content: "◆"; margin-left: 56px; color: var(--crimson); font-size: 8px; vertical-align: middle; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ---------- Sections ---------- */
+  section { padding: 120px 0; }
+  section.alt { background: var(--paper); border-top: 1px solid var(--contour); border-bottom: 1px solid var(--contour); }
+  .section-head { max-width: 660px; margin-bottom: 72px; }
+  .section-head h2 { font-size: clamp(34px, 4.6vw, 56px); font-weight: 800; margin-bottom: 20px; }
+  .section-head p { color: var(--slate); font-size: 18.5px; }
+
+  /* Problem */
+  .problem-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: start; }
+  .problem-grid blockquote {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(26px, 3.2vw, 38px);
+    font-weight: 700; line-height: 1.2; letter-spacing: -0.015em;
+  }
+  .problem-grid blockquote em { font-style: normal; color: var(--crimson); }
+  .problem-grid .body p { margin-bottom: 20px; color: var(--slate); }
+  .problem-grid .body p strong { color: var(--ink); font-weight: 600; }
+
+  /* Pillars */
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .pillar {
+    background: var(--snow);
+    border: 1px solid var(--contour);
+    border-radius: 18px;
+    padding: 40px 32px;
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .pillar:hover { transform: translateY(-5px); box-shadow: 0 20px 48px rgba(19,26,38,0.1); border-color: rgba(200,16,46,0.35); }
+  .pillar .mod {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+    letter-spacing: 0.14em; color: var(--crimson);
+    display: inline-block; margin-bottom: 20px;
+    background: var(--crimson-soft); padding: 5px 12px; border-radius: 100px;
+  }
+  .pillar h3 { font-size: 23px; font-weight: 700; margin-bottom: 14px; }
+  .pillar p { color: var(--slate); font-size: 15.5px; margin-bottom: 18px; }
+  .pillar ul { list-style: none; }
+  .pillar li {
+    font-size: 14.5px; color: var(--slate);
+    padding: 8px 0 8px 24px; position: relative;
+    border-top: 1px solid var(--contour);
+  }
+  .pillar li::before { content: "—"; position: absolute; left: 0; color: var(--crimson); }
+
+  /* Climb */
+  .climb-grid { position: relative; }
+  .camp {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 40px;
+    padding: 44px 0;
+    border-bottom: 1px solid var(--contour);
+  }
+  .camp:last-of-type { border-bottom: none; }
+  .camp .alt-mark { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--muted); padding-top: 8px; }
+  .camp .alt-mark strong { display: block; color: var(--crimson); font-size: 16px; font-weight: 500; margin-bottom: 4px; }
+  .camp h3 { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
+  .camp p { color: var(--slate); max-width: 620px; }
+  .camp p strong { color: var(--ink); font-weight: 600; }
+
+  /* Outcomes — dark band */
+  .outcomes { background: var(--night); color: #fff; position: relative; overflow: hidden; }
+  .outcomes .section-head h2 { color: #fff; }
+  .outcomes .section-head p { color: var(--muted-dark); }
+  .outcome-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--contour-dark); border: 1px solid var(--contour-dark); border-radius: 18px; overflow: hidden; }
+  .outcome {
+    background: var(--night-2);
+    padding: 40px 36px;
+  }
+  .outcome .num {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 15px; font-weight: 700; color: var(--crimson);
+    display: block; margin-bottom: 14px;
+  }
+  .outcome h3 { font-size: 21px; font-weight: 700; margin-bottom: 10px; color: #fff; }
+  .outcome p { color: var(--muted-dark); font-size: 15.5px; }
+
+  /* Founder */
+  .founder { display: grid; grid-template-columns: 340px 1fr; gap: 72px; align-items: center; }
+  .founder-photo {
+    aspect-ratio: 4/5;
+    border-radius: 18px;
+    background: linear-gradient(165deg, var(--night-2), var(--night));
+    display: flex; align-items: flex-end; justify-content: center;
+    overflow: hidden; position: relative;
+  }
+  .founder-photo svg { width: 110%; position: absolute; bottom: -4px; opacity: 0.5; }
+  .founder-photo .tag {
+    position: relative; margin-bottom: 30px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; letter-spacing: 0.14em;
+    color: var(--muted-dark); text-transform: uppercase;
+    border: 1px solid var(--contour-dark); border-radius: 100px; padding: 8px 18px;
+  }
+  .founder h2 { font-size: clamp(30px, 3.6vw, 44px); margin-bottom: 22px; font-weight: 800; }
+  .founder p { color: var(--slate); margin-bottom: 18px; }
+  .founder p strong { color: var(--ink); font-weight: 600; }
+  .founder .sig { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; color: var(--ink); font-size: 18px; }
+
+  /* FAQ */
+  .faq { max-width: 760px; }
+  details {
+    border-bottom: 1px solid var(--contour);
+  }
+  summary {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 20px; font-weight: 700;
+    padding: 26px 44px 26px 0;
+    cursor: pointer; list-style: none; position: relative;
+  }
+  summary::-webkit-details-marker { display: none; }
+  summary::after {
+    content: "+"; position: absolute; right: 4px; top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Instrument Sans', sans-serif; font-weight: 400;
+    font-size: 26px; color: var(--crimson);
+    transition: transform 0.2s ease;
+  }
+  details[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  details .ans { padding: 0 0 28px; color: var(--slate); max-width: 640px; }
+  details .ans p { margin-bottom: 12px; }
+
+  /* CTA */
+  .cta {
+    background: var(--night); color: #fff;
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .cta-svg path { fill: none; stroke: var(--contour-dark); stroke-width: 1.4; }
+  .cta-svg .ridge { stroke: var(--crimson); stroke-width: 2; }
+  .cta .wrap { position: relative; z-index: 1; }
+  .cta .eyebrow { justify-content: center; }
+  .cta .eyebrow::before { display: none; }
+  .cta h2 { font-size: clamp(38px, 5.4vw, 68px); font-weight: 800; margin-bottom: 22px; color: #fff; }
+  .cta p { color: var(--muted-dark); font-size: 18.5px; max-width: 540px; margin: 0 auto 40px; }
+  .cta p strong { color: #fff; font-weight: 500; }
+  .cta .fine {
+    margin-top: 28px; font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: 0.1em; color: var(--muted-dark);
+  }
+
+  footer {
+    background: var(--night);
+    border-top: 1px solid var(--contour-dark);
+    padding: 36px 0;
+    font-size: 14px; color: var(--muted-dark);
+  }
+  .foot-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .foot-inner .nep { font-family: 'IBM Plex Mono', monospace; font-size: 13px; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .marquee-track { animation: none; }
+    .hero-svg path, .cta-svg path { stroke-dasharray: none !important; animation: none !important; }
+    .btn, .pillar { transition: none; }
+  }
+
+  @media (max-width: 900px) {
+    .nav-links > a:not(.btn) { display: none; }
+    section { padding: 80px 0; }
+    .problem-grid, .founder { grid-template-columns: 1fr; gap: 40px; }
+    .pillars, .outcome-grid { grid-template-columns: 1fr; }
+    .camp { grid-template-columns: 1fr; gap: 10px; padding: 32px 0; }
+    .founder-photo { max-width: 340px; }
+    .hero-meta { gap: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav" class="dark-mode" aria-label="Main">
+  <div class="nav-inner">
+    <a class="logo" href="#top">Sagarmatha<span>.</span></a>
+    <div class="nav-links">
+      <a href="#program">Curriculum</a>
+      <a href="#climb">The climb</a>
+      <a href="#outcomes">Outcomes</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" href="#apply">Apply — Cohort 1 <span class="arrow">→</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <svg class="hero-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path class="c" d="M-40,860 C240,850 420,830 640,810 C900,786 1150,800 1480,830" />
+    <path class="c" d="M-40,800 C260,788 440,752 660,724 C920,690 1160,720 1480,770" />
+    <path class="c" d="M-40,740 C280,724 470,668 690,630 C930,588 1180,640 1480,706" />
+    <path class="c" d="M-40,680 C300,660 500,580 720,528 C950,474 1190,556 1480,640" />
+    <path class="c" d="M60,640 C340,608 540,500 740,440 C960,376 1200,490 1420,590" />
+    <path class="c" d="M180,600 C400,560 580,428 760,360 C960,286 1200,430 1360,540" />
+    <path class="c" d="M300,560 C460,512 620,360 780,290 C950,216 1160,380 1300,500" />
+    <path class="ridge" d="M400,540 C520,470 660,300 800,225 C930,160 1100,340 1240,470" />
+    <text class="elev-label" x="70" y="828">5,364 M — BASE CAMP</text>
+    <text class="elev-label" x="250" y="586">7,900 M — CAMP IV</text>
+    <text class="elev-label peak" x="820" y="205">8,849 M — SUMMIT</text>
+  </svg>
+
+  <div class="wrap hero-content">
+    <div class="kicker">Leadership · Cohort 1 · Fall 2026</div>
+    <h1>Expertise built your career.<br><em>Leadership</em> will define it.</h1>
+    <p class="lede">A twelve-week program for PhD engineers of the Nepalese diaspora — the ones whose work carries the roadmap, and whose names should be on the org chart. <strong>Eight seats. One climbing season.</strong></p>
+    <div class="hero-ctas">
+      <a class="btn" href="#apply">Request an application <span class="arrow">→</span></a>
+      <a class="btn-ghost" href="#program">See the curriculum</a>
+    </div>
+    <div class="hero-meta">
+      <div><strong>12 weeks</strong>live cohort</div>
+      <div><strong>8 seats</strong>per ascent</div>
+      <div><strong>24 hours</strong>of live practice</div>
+      <div><strong>4 sessions</strong>1:1 coaching</div>
+    </div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Principal Engineers</span><span>Staff Research Scientists</span><span>Technical Leads</span><span>PhD Researchers</span><span>Senior Architects</span><span>Component Design Engineers</span><span>Process Engineers</span><span>Principal Engineers</span><span>Staff Research Scientists</span><span>Technical Leads</span><span>PhD Researchers</span><span>Senior Architects</span><span>Component Design Engineers</span><span>Process Engineers</span>
+  </div>
+</div>
+
+<!-- ============ THE GAP ============ -->
+<section>
+  <div class="wrap">
+    <div class="eyebrow reveal">The gap <span class="alt">ALT 6,000 M</span></div>
+    <div class="problem-grid">
+      <blockquote class="reveal">
+        The talent was never in question. <em>The playbook was never shared.</em>
+      </blockquote>
+      <div class="body reveal">
+        <p>Walk the halls of any major semiconductor company and you will find them: engineers with doctorates, patents, and a decade of shipped silicon — who have never once been asked to lead.</p>
+        <p>The reason is not ability. <strong>The skills that earn a PhD are not the skills that earn a P&amp;L.</strong> Executive communication, influence without authority, sponsorship, visibility — these are learned behaviors, taught informally, over coffee, to people who already look like the leadership team.</p>
+        <p>For first-generation immigrants raised to let the work speak for itself, that informal curriculum never arrives. Sagarmatha delivers it — deliberately, rigorously, and in a room where no one has to explain where they come from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CURRICULUM ============ -->
+<section class="alt" id="program">
+  <div class="wrap">
+    <div class="eyebrow reveal">Curriculum <span class="alt">ALT 6,800 M</span></div>
+    <div class="section-head reveal">
+      <h2>Three disciplines. Zero theory for theory's sake.</h2>
+      <p>Every module runs on material from your actual job — your projects, your reviews, your promotion case. Nothing hypothetical.</p>
+    </div>
+    <div class="pillars">
+      <article class="pillar reveal">
+        <span class="mod">Module I</span>
+        <h3>Executive communication</h3>
+        <p>Translate deep technical work into decisions a VP can make in five minutes.</p>
+        <ul>
+          <li>The answer-first briefing structure</li>
+          <li>Presenting risk without burying the ask</li>
+          <li>Weekly live delivery, filmed and reviewed</li>
+        </ul>
+      </article>
+      <article class="pillar reveal">
+        <span class="mod">Module II</span>
+        <h3>Influence without authority</h3>
+        <p>Lead cross-functional work and win arguments you don't have the title to win.</p>
+        <ul>
+          <li>Stakeholder mapping on a live project</li>
+          <li>Disagreement as a professional skill</li>
+          <li>Building a reputation that travels ahead of you</li>
+        </ul>
+      </article>
+      <article class="pillar reveal">
+        <span class="mod">Module III</span>
+        <h3>Owning the career</h3>
+        <p>Run your advancement like a program of record — with milestones, owners, and dates.</p>
+        <ul>
+          <li>The promotion case your manager can champion</li>
+          <li>Finding sponsors, not just mentors</li>
+          <li>Visibility on your own cultural terms</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ THE CLIMB ============ -->
+<section id="climb">
+  <div class="wrap">
+    <div class="eyebrow reveal">The climb <span class="alt">ALT 7,500 M</span></div>
+    <div class="section-head reveal">
+      <h2>Twelve weeks, four camps</h2>
+      <p>Serious ascents move in stages. Each camp is earned before the next one opens.</p>
+    </div>
+    <div class="climb-grid">
+      <div class="camp reveal">
+        <div class="alt-mark"><strong>Base Camp</strong>Weeks 1–3</div>
+        <div>
+          <h3>Know your terrain</h3>
+          <p>Structured 360° feedback from peers and managers, a leadership diagnostic, and a private session to define <strong>your personal summit</strong> — the specific role, scope, and timeline you are climbing toward. Vague ambition doesn't survive Base Camp.</p>
+        </div>
+      </div>
+      <div class="camp reveal">
+        <div class="alt-mark"><strong>Camp II</strong>Weeks 4–7</div>
+        <div>
+          <h3>Practice under load</h3>
+          <p>Weekly live workshops. You present your real projects to the cohort, run mock skip-levels and design reviews, and take direct feedback from people with no reason to flatter you. <strong>It is safe to be bad here so you can be excellent out there.</strong></p>
+        </div>
+      </div>
+      <div class="camp reveal">
+        <div class="alt-mark"><strong>Camp IV</strong>Weeks 8–11</div>
+        <div>
+          <h3>Lead in the wild</h3>
+          <p>One visible leadership action at your actual company — lead a technical review, pitch an initiative, take over a stalled workstream — planned with your coach, executed by you, debriefed by the cohort. <strong>This is where the program leaves the classroom.</strong></p>
+        </div>
+      </div>
+      <div class="camp reveal">
+        <div class="alt-mark"><strong>Summit</strong>Week 12</div>
+        <div>
+          <h3>Plant your flag</h3>
+          <p>You present your leadership narrative to the full cohort and invited senior leaders, and leave with a twelve-month advancement roadmap. <strong>The summit is not the end of the climb. It's proof you can climb.</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUTCOMES ============ -->
+<section class="outcomes" id="outcomes">
+  <div class="wrap">
+    <div class="eyebrow reveal">What you leave with <span class="alt">ALT 8,300 M</span></div>
+    <div class="section-head reveal">
+      <h2>Deliverables, not vibes</h2>
+      <p>Twelve weeks from now, these exist — or the program failed.</p>
+    </div>
+    <div class="outcome-grid reveal">
+      <div class="outcome">
+        <span class="num">01</span>
+        <h3>A promotion case that survives calibration</h3>
+        <p>Your impact, written in the language your leadership actually uses to make promotion decisions — reviewed line by line with your coach.</p>
+      </div>
+      <div class="outcome">
+        <span class="num">02</span>
+        <h3>An executive narrative for your work</h3>
+        <p>The five-minute version of your last three years that makes a director lean forward. Rehearsed until it's yours.</p>
+      </div>
+      <div class="outcome">
+        <span class="num">03</span>
+        <h3>A sponsor map — and first moves made</h3>
+        <p>The three leaders whose advocacy changes your trajectory, identified by name, with the first conversation already behind you.</p>
+      </div>
+      <div class="outcome">
+        <span class="num">04</span>
+        <h3>Seven people who take your call for life</h3>
+        <p>A cohort that has watched you struggle, improve, and lead — the professional network most engineers never build.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section class="alt" id="founder">
+  <div class="wrap founder">
+    <div class="founder-photo reveal" role="img" aria-label="Founder portrait placeholder">
+      <svg viewBox="0 0 320 160" aria-hidden="true"><path d="M0,160 L80,60 L130,110 L180,30 L240,100 L320,50 L320,160 Z" fill="#1D2A44"/></svg>
+      <div class="tag">Your photo here</div>
+    </div>
+    <div class="reveal">
+      <div class="eyebrow">The founder</div>
+      <h2>Built by someone who watched the pattern for twenty years</h2>
+      <p>I have spent my career inside a global semiconductor company, working alongside some of the most capable engineers in the industry — many of them from Nepal, nearly all of them carrying doctorates and none of them carrying titles that matched their impact.</p>
+      <p><strong>I stopped believing it was a coincidence a long time ago.</strong> The pattern is structural: the informal curriculum of leadership — how to be seen, how to be sponsored, how to ask — gets passed to some people and withheld from others. Not maliciously. Just reliably.</p>
+      <p>Sagarmatha is my answer: the program I watched a hundred brilliant colleagues need and never receive. It exists so the next generation doesn't have to figure it out alone.</p>
+      <p class="sig">— Founder, Sagarmatha Leadership Lab</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="eyebrow reveal">Questions <span class="alt">ALT 8,600 M</span></div>
+    <div class="section-head reveal">
+      <h2>Asked before every ascent</h2>
+    </div>
+    <div class="faq reveal">
+      <details>
+        <summary>How much time does this actually take?</summary>
+        <div class="ans"><p>Plan for three hours per week: one two-hour live workshop and roughly an hour of preparation. The preparation is work you should be doing anyway — your promotion case, your executive narrative — so most participants describe it as redirected time, not added time.</p></div>
+      </details>
+      <details>
+        <summary>Will my employer pay for it?</summary>
+        <div class="ans"><p>Frequently, yes. Most large technology companies hold learning and development budgets that cover external leadership programs, and a program with defined deliverables is an easy approval. We provide a one-page justification memo written for your manager, not for you.</p></div>
+      </details>
+      <details>
+        <summary>Why a cohort instead of one-on-one coaching?</summary>
+        <div class="ans"><p>Because leadership is performed in front of people. A private coach can refine your thinking; only a room can pressure-test your presence. The cohort is also the product: eight peers who share your background, watch your growth, and remain your network long after week twelve.</p></div>
+      </details>
+      <details>
+        <summary>I'm not Nepalese. Can I still apply?</summary>
+        <div class="ans"><p>The program is designed for the Nepalese diaspora, and most seats are reserved accordingly. A small number of seats in each cohort are open to engineers from other South Asian immigrant backgrounds who share the same path — deep technical credentials, thin leadership sponsorship. Tell us your story in the application.</p></div>
+      </details>
+      <details>
+        <summary>What does it cost?</summary>
+        <div class="ans"><p>Founding-cohort pricing is disclosed during the application conversation and is set at half of what future cohorts will pay — in exchange for candid feedback that shapes the program. If the fee is the only thing standing between you and a seat, say so. We will find a way.</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA ============ -->
+<section class="cta" id="apply">
+  <svg class="cta-svg" viewBox="0 0 1440 620" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+    <path d="M-40,600 C300,580 520,540 740,500 C960,460 1200,520 1480,570" />
+    <path d="M100,560 C380,520 560,440 760,390 C960,340 1200,440 1400,520" />
+    <path class="ridge" d="M320,520 C500,450 660,320 800,265 C940,212 1120,360 1280,480" />
+  </svg>
+  <div class="wrap reveal">
+    <div class="eyebrow">Cohort 1 · Fall 2026 <span class="alt">ALT 8,849 M</span></div>
+    <h2>Eight seats.<br>One climbing season.</h2>
+    <p>Applications for the founding cohort close when the eighth seat fills. <strong>Founding members set the culture — and pay half.</strong></p>
+    <a class="btn" href="mailto:hello@sagarmathalab.com?subject=Cohort%201%20Application">Request an application <span class="arrow">→</span></a>
+    <div class="fine">15-MINUTE FIT CALL · NO OBLIGATION · DECISIONS WITHIN ONE WEEK</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-inner">
+    <div>© 2026 Sagarmatha Leadership Lab</div>
+    <div class="nep">सगरमाथा — "the head of the sky"</div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Nav theme swap: dark over hero, light after
+  const nav = document.getElementById('nav');
+  const hero = document.querySelector('.hero');
+  const navIO = new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { nav.classList.add('dark-mode'); nav.classList.remove('light-mode'); }
+    else { nav.classList.add('light-mode'); nav.classList.remove('dark-mode'); }
+  }, { rootMargin: '-64px 0px 0px 0px', threshold: 0 });
+  navIO.observe(hero);
+
+  // Draw in contour lines (skipped under reduced motion)
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.hero-svg path, .cta-svg path').forEach((p, i) => {
+      const len = p.getTotalLength();
+      p.style.strokeDasharray = len;
+      p.style.strokeDashoffset = len;
+      p.style.transition = `stroke-dashoffset 1.6s ease ${(i % 8) * 0.12}s`;
+      requestAnimationFrame(() => requestAnimationFrame(() => { p.style.strokeDashoffset = '0'; }));
+    });
+  }
+</script>
+</body>
+</html>
